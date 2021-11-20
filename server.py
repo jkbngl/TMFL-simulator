@@ -196,8 +196,6 @@ for i, strat in enumerate(strats):
             fuel_time_loss = sum(
                 [elem.get('fueled_time') for elem in df])
 
-            st.text('')
-            st.text('')
             st.text(
                 f"{overall_rounds} rounds = {prettyPrintDuration(racing_time)}")
             st.text(
