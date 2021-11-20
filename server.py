@@ -189,6 +189,25 @@ for i, strat in enumerate(strats):
             df.append(dict(Task=f"Stint {len(df) + 1}", start=last_stop_round, finish=current_round, current_fuel=fuel_percent,
                       current_tire=tire_percent, refueling_to=fuel_percent, sec_lost_with_low_tire=sec_lost_with_low_tire, rounds_with_low_tire=rounds_with_low_tire, fueled_time=(fuel_percent - fuel_percent) / __l_per_sec__))
 
+            racing_time = overall_rounds * round_duration_sec
+            pitstop_time = len(df) * pit_stop_delta_time
+            low_tire_loss = sum(
+                [elem.get('sec_lost_with_low_tire') for elem in df])
+            fuel_time_loss = sum(
+                [elem.get('fueled_time') for elem in df])
+
+            st.text('')
+            st.text('')
+            st.text(
+                f"{overall_rounds} rounds = {prettyPrintDuration(racing_time)}")
+            st.text(
+                f"{len(df)} pitstops = {prettyPrintDuration(pitstop_time)} + fuel time: {prettyPrintDuration(fuel_time_loss)}")
+            st.text(
+                f"{prettyPrintDuration(low_tire_loss)} lost due to low tire.")
+
+            st.markdown(
+                f"Overall duration is **{prettyPrintDuration(racing_time + pitstop_time + low_tire_loss + fuel_time_loss)}**")
+
             with st.expander("See more details"):
                 for i, stint in enumerate(df):
 
@@ -205,26 +224,6 @@ for i, strat in enumerate(strats):
                     else:
                         st.write(
                             f"{i+1}. stop in round {stint.get('finish')} with tire: {cur_tire}% and fuel: {cur_fuel}l / refuel to: {fuel_to}l")
-
-            racing_time = overall_rounds * round_duration_sec
-            pitstop_time = len(df) * pit_stop_delta_time
-            low_tire_loss = sum(
-                [elem.get('sec_lost_with_low_tire') for elem in df])
-            fuel_time_loss = sum(
-                [elem.get('fueled_time') for elem in df])
-
-            st.text('')
-            st.text('')
-            st.subheader('Race duration:')
-            st.text(
-                f"{overall_rounds} rounds = {prettyPrintDuration(racing_time)}")
-            st.text(
-                f"{len(df)} pitstops = {prettyPrintDuration(pitstop_time)} + fuel time: {prettyPrintDuration(fuel_time_loss)}")
-            st.text(
-                f"{prettyPrintDuration(low_tire_loss)} lost due to low tire.")
-
-            st.markdown(
-                f"Overall duration is **{prettyPrintDuration(racing_time + pitstop_time + low_tire_loss + fuel_time_loss)}**")
 
             makePlot(df)
 
