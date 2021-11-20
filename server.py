@@ -189,22 +189,22 @@ for i, strat in enumerate(strats):
             df.append(dict(Task=f"Stint {len(df) + 1}", start=last_stop_round, finish=current_round, current_fuel=fuel_percent,
                       current_tire=tire_percent, refueling_to=fuel_percent, sec_lost_with_low_tire=sec_lost_with_low_tire, rounds_with_low_tire=rounds_with_low_tire, fueled_time=(fuel_percent - fuel_percent) / __l_per_sec__))
 
-            for i, stint in enumerate(df):
+            with st.expander("See more details"):
+                for i, stint in enumerate(df):
 
-                cur_fuel = stint.get('current_fuel')
-                fuel_to = stint.get('refueling_to')
-                cur_tire = stint.get('current_tire')
+                    cur_fuel = stint.get('current_fuel')
+                    fuel_to = stint.get('refueling_to')
+                    cur_tire = stint.get('current_tire')
 
-                with st.expander("See more details"):
-                    if i + 1 == len(df):
-                        st.write(
-                            f"Finishing race with tire: {cur_tire}% and fuel: {cur_fuel}l")
-                    elif i + 2 == len(df):
-                        st.write(
-                            f"{i+1}. stop in round {stint.get('finish')} with tire: {cur_tire}% and fuel: {cur_fuel}l / refuel to: {fuel_to}l | with 1 overlap: {fuel_to - 1 * fuel_per_round}l | with 2 overlaps: {fuel_to - 2 * fuel_per_round}l")
-                    else:
-                        st.write(
-                            f"{i+1}. stop in round {stint.get('finish')} with tire: {cur_tire}% and fuel: {cur_fuel}l / refuel to: {fuel_to}l")
+                       if i + 1 == len(df):
+                            st.write(
+                                f"Finishing race with tire: {cur_tire}% and fuel: {cur_fuel}l")
+                        elif i + 2 == len(df):
+                            st.write(
+                                f"{i+1}. stop in round {stint.get('finish')} with tire: {cur_tire}% and fuel: {cur_fuel}l / refuel to: {fuel_to}l | with 1 overlap: {fuel_to - 1 * fuel_per_round}l | with 2 overlaps: {fuel_to - 2 * fuel_per_round}l")
+                        else:
+                            st.write(
+                                f"{i+1}. stop in round {stint.get('finish')} with tire: {cur_tire}% and fuel: {cur_fuel}l / refuel to: {fuel_to}l")
 
             racing_time = overall_rounds * round_duration_sec
             pitstop_time = len(df) * pit_stop_delta_time
