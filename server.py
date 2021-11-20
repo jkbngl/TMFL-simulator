@@ -31,7 +31,7 @@ st.sidebar.write(f"How long does a tire stop take: {__tire_change_sec__}sec")
 st.sidebar.write(f"Litres of found refueled per second: {__l_per_sec__}l")
 
 
-col1, col2, col3 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 
 with st.form('Form'):
