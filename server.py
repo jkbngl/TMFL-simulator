@@ -14,7 +14,7 @@ st.set_page_config(
 
 st.title('Stint Calculation')
 
-strats = st.sidebar.multiselect('Strats to simulate', ['avoid_low_tire', 'minimize_low_tire', 'least_stops'], [
+strats = st.sidebar.multiselect('Strats to simulate', ['minimize_low_tire', 'least_stops', 'avoid_low_tire'], [
                                 'avoid_low_tire', 'minimize_low_tire', 'least_stops'], help='The possible strategies:\nEither avoid at any cost that you have to drive in low tires.\nTo stop in the round where you have to low tires - finishing the current round.\nNot to watch for tires at all and just stop when fuel is needed.')
 
 
@@ -110,12 +110,10 @@ def makePlot(df):
 
         if current_fuel <= 5:
 
-            """
-            4l fuel left
-            we show it with < 5l
-            l per round = 10
-            5-4 = 1 / 10 = 0.1 rounds
-            """
+            # 4l fuel left
+            # we show it with < 5l
+            # l per round = 10
+            # 5-4 = 1 / 10 = 0.1 rounds
 
             plt.axvline(x=finish_round - ((5 - current_fuel) / fuel_per_round),
                         color=cmap(.5), linestyle='--')
@@ -224,10 +222,8 @@ for i, strat in enumerate(strats):
             st.text(
                 f"{prettyPrintDuration(low_tire_loss)} lost due to low tire.")
 
-            st.text(
-                f"Overall duration: {prettyPrintDuration(racing_time + pitstop_time + low_tire_loss + fuel_time_loss)}")
-
-            # print(df)
+            st.markdown(
+                f"Overall duration is **{prettyPrintDuration(racing_time + pitstop_time + low_tire_loss + fuel_time_loss)}**")
 
             makePlot(df)
 
