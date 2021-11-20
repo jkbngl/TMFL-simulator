@@ -30,25 +30,34 @@ st.sidebar.write(
 st.sidebar.write(f"How long does a tire stop take: {__tire_change_sec__}sec")
 st.sidebar.write(f"Litres of found refueled per second: {__l_per_sec__}l")
 
-overall_rounds = st.slider(
-    "How many rounds do you drive:", 0, 100, 60, help='How many rounds the race has')
 
-tire_per_round = st.slider(
-    "How many percent of tire loss do you have per round:", 0, 40, 12, help='How many percent your tires decrease in a single race pace round')
-fuel_per_round = st.slider(
-    "How many litres of fuel do you need per round", 0, 40, 10, help='How many litres of fuel do you need in a single race pace round')
-
-round_duration_sec = st.slider(
-    "How long does a round on good tires take [sec]", 0, 300, 51, help='Expected round duration in race pace')
-pit_stop_delta_time = st.slider(
-    "How much seconds are lost if you pit:", 0, 60, 20, help='The time from entering the pit lane until leaving it, in comparison if you drive the normal way')
+col1, col2, col3 = st.beta_columns(2)
 
 
-secs_lost_with_tires_low_per_round = st.slider(
-    "How much are you losing if you are driving on low tires [sec per round]", 0, 40, 3, help='In seconds, how much slower you can drive if you have bad tires (< 30 %)')
+with st.form('Form'):
 
-fuel_safety = st.number_input(
-    "How much extra fuel to calculate for the last stint:", 1, 20, 4, help='How many litres of fuel should we safe calculate to have over at the end for unexpected reasons, e.g. sudden rain stop')
+    with col1:
+        overall_rounds = st.slider(
+            "How many rounds do you drive:", 0, 100, 60, help='How many rounds the race has')
+        round_duration_sec = st.slider(
+            "How long does a round on good tires take [sec]", 0, 300, 51, help='Expected round duration in race pace')
+
+    with col2:
+        tire_per_round = st.slider("How many percent of tire loss do you have per round:",
+                                   0, 40, 12, help='How many percent your tires decrease in a single race pace round')
+        fuel_per_round = st.slider("How many litres of fuel do you need per round", 0,
+                                   40, 10, help='How many litres of fuel do you need in a single race pace round')
+
+    with col3:
+        secs_lost_with_tires_low_per_round = st.slider(
+            "How much are you losing if you are driving on low tires [sec per round]", 0, 40, 3, help='In seconds, how much slower you can drive if you have bad tires (< 30 %)')
+        fuel_safety = st.number_input("How much extra fuel to calculate for the last stint:", 1, 20, 4,
+                                      help='How many litres of fuel should we safe calculate to have over at the end for unexpected reasons, e.g. sudden rain stop')
+        pit_stop_delta_time = st.slider("How much seconds are lost if you pit:", 0, 60, 20,
+                                        help='The time from entering the pit lane until leaving it, in comparison if you drive the normal way')
+
+    submitted = st.form_submit_button('Submit')
+
 
 rounds_fuel = math.floor(100 / fuel_per_round)
 rounds_tires = math.floor(100 / tire_per_round)
