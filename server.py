@@ -34,27 +34,27 @@ st.sidebar.write(f"Litres of found refueled per second: {__l_per_sec__}l")
 col1, col2, col3 = st.columns(3)
 
 
-with st.form('Form'):
+with st.form('Form', key='columns_in_form'):
 
     with col1:
         overall_rounds = st.slider(
-            "How many rounds do you drive:", 0, 100, 60, help='How many rounds the race has')
+            "How many rounds do you drive:", 0, 100, 60, help='How many rounds the race has', key=1)
         round_duration_sec = st.slider(
-            "How long does a round on good tires take [sec]", 0, 300, 51, help='Expected round duration in race pace')
+            "How long does a round on good tires take [sec]", 0, 300, 51, help='Expected round duration in race pace', key=2)
 
     with col2:
-        tire_per_round = st.slider("How many percent of tire loss do you have per round:",
-                                   0, 40, 12, help='How many percent your tires decrease in a single race pace round')
-        fuel_per_round = st.slider("How many litres of fuel do you need per round", 0,
-                                   40, 10, help='How many litres of fuel do you need in a single race pace round')
+        tire_per_round = st.slider("How many percent of tire loss do you have per round:", 0,
+                                   40, 12, help='How many percent your tires decrease in a single race pace round', key=3)
+        fuel_per_round = st.slider("How many litres of fuel do you need per round", 0, 40,
+                                   10, help='How many litres of fuel do you need in a single race pace round', key=4)
 
     with col3:
         secs_lost_with_tires_low_per_round = st.slider(
-            "How much are you losing if you are driving on low tires [sec per round]", 0, 40, 3, help='In seconds, how much slower you can drive if you have bad tires (< 30 %)')
-        fuel_safety = st.number_input("How much extra fuel to calculate for the last stint:", 1, 20, 4,
-                                      help='How many litres of fuel should we safe calculate to have over at the end for unexpected reasons, e.g. sudden rain stop')
+            "How much are you losing if you are driving on low tires [sec per round]", 0, 40, 3, help='In seconds, how much slower you can drive if you have bad tires (< 30 %)', key=5)
         pit_stop_delta_time = st.slider("How much seconds are lost if you pit:", 0, 60, 20,
-                                        help='The time from entering the pit lane until leaving it, in comparison if you drive the normal way')
+                                        help='The time from entering the pit lane until leaving it, in comparison if you drive the normal way', key=7)
+        fuel_safety = st.number_input("How much extra fuel to calculate for the last stint:", 1, 20, 4,
+                                      help='How many litres of fuel should we safe calculate to have over at the end for unexpected reasons, e.g. sudden rain stop', key=6)
 
     submitted = st.form_submit_button('Submit')
 
