@@ -34,7 +34,7 @@ st.sidebar.write(f"Litres of found refueled per second: {__l_per_sec__}l")
 col1, col2, col3 = st.columns(3)
 
 
-with st.form('Form', key='columns_in_form'):
+with st.form(key='columns_in_form'):
 
     with col1:
         overall_rounds = st.slider(
